@@ -40,7 +40,14 @@ public class DoublyLinkedList<E> implements Iterable<E>, Cloneable {
      * @return the number of elements in the linked list
      */
     public int size() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        int output = 0;
+        Node currentNode = this.header;
+
+        while (!currentNode.getNext().equals(this.trailer)) {
+            output++;
+            currentNode = currentNode.getNext();
+        }
+        return output;
     }
 
     /**
@@ -49,7 +56,11 @@ public class DoublyLinkedList<E> implements Iterable<E>, Cloneable {
      * @return true if the list is empty, and false otherwise
      */
     public boolean isEmpty() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        boolean output=false;
+        if (this.header.getNext().equals(this.trailer)) {
+            output = true;
+        }
+        return output;
     }
 
     /**
@@ -58,7 +69,11 @@ public class DoublyLinkedList<E> implements Iterable<E>, Cloneable {
      * @return the first element of the list
      */
     public E first() {
-        throw new UnsupportedOperationException("Not supported yet.");
+
+        if (this.header.getNext().equals(this.trailer)) {
+            return null;
+        }
+        return this.header.getNext().getElement();
     }
 
     /**
@@ -67,7 +82,10 @@ public class DoublyLinkedList<E> implements Iterable<E>, Cloneable {
      * @return the last element of the list
      */
     public E last() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if (this.trailer.getPrev().equals(this.header)) {
+            return null;
+        }
+        return this.trailer.getPrev().getElement();
     }
 
 // public update methods
@@ -78,7 +96,7 @@ public class DoublyLinkedList<E> implements Iterable<E>, Cloneable {
      */
     public void addFirst(E e) {
         // place just after the header
-        throw new UnsupportedOperationException("Not supported yet.");
+        addBetween(e,header,header.getNext());
     }
 
     /**
@@ -88,7 +106,7 @@ public class DoublyLinkedList<E> implements Iterable<E>, Cloneable {
      */
     public void addLast(E e) {
         // place just before the trailer
-        throw new UnsupportedOperationException("Not supported yet.");
+        addBetween(e,trailer.getPrev(),trailer);
     }
 
     /**
@@ -97,7 +115,12 @@ public class DoublyLinkedList<E> implements Iterable<E>, Cloneable {
      * @return the first element of the list
      */
     public E removeFirst() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Node firstElement = this.header.getNext();
+        if (firstElement.equals(this.trailer)) {
+            return null;
+        }
+        remove(firstElement);
+        return (E) firstElement.getElement();
     }
 
     /**
@@ -106,7 +129,12 @@ public class DoublyLinkedList<E> implements Iterable<E>, Cloneable {
      * @return the last element of the list
      */
     public E removeLast() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Node lastElement = this.trailer.getPrev();
+        if (lastElement.equals(this.header)) {
+            return null;
+        }
+        remove(lastElement);
+        return (E) lastElement.getElement();
     }
     
 // private update methods
@@ -115,14 +143,27 @@ public class DoublyLinkedList<E> implements Iterable<E>, Cloneable {
      * Adds an element e to the linked list between the two given nodes.
      */
     private void addBetween(E e, Node<E> predecessor, Node<E> successor) {
-        throw new UnsupportedOperationException("Not supported yet.");
+
+        // update new element
+        Node newElement = new Node<>(e,predecessor,successor);
+
+        // update predecessor
+        predecessor.setNext(newElement);
+
+        // update successsor
+        successor.setPrev(newElement);
+
     }
 
     /**
      * Removes a given node from the list and returns its content.
      */
     private E remove(Node<E> node) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        node.getPrev().setNext(node.getNext());
+        node.getNext().setPrev(node.getPrev());
+        node.setNext(null);
+        node.setPrev(null);
+        return node.getElement();
     }
  
 // Overriden methods        
