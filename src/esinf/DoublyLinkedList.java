@@ -216,9 +216,9 @@ public class DoublyLinkedList<E> implements Iterable<E>, Cloneable {
                 return null;
             }
 
+            this.lastReturnedNode = returnedElementNode;
             this.prevNode.setElement(returnedElement);
             this.nextNode.setElement(returnedElementNode.getNext().getElement());
-            this.lastReturnedNode = returnedElementNode;
             this.nextIndex++;
 
             return returnedElement;
@@ -272,7 +272,8 @@ public class DoublyLinkedList<E> implements Iterable<E>, Cloneable {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 
-    }    //----------- end of inner DoublyLinkedListIterator class ----------
+    }
+//----------- end of inner DoublyLinkedListIterator class ----------
     
 //---------------- Iterable implementation ----------------
     @Override
@@ -321,6 +322,6 @@ public class DoublyLinkedList<E> implements Iterable<E>, Cloneable {
             this.next = next;
         }
     }
-    //----------- end of nested Node class ----------
+//----------- end of nested Node class ----------
     
 }
